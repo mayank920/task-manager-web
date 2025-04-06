@@ -31,10 +31,12 @@ export async function PATCH(request: Request, context: {params: {id: string}}) {
 }
 
 // import { ObjectId } from "mongodb";
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+interface Params{
+  params: {id: string}
+}
 export async function DELETE(
   request: Request,
-  { params }: { params: Record<string, string> }
+  { params }: Params
 ) {
   await connectDB();
   const { id } = params;
