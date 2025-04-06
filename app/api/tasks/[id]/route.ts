@@ -2,11 +2,11 @@
 import { NextResponse, NextRequest } from "next/server";
 import connectDB from "@/lib/mongodb";
 import Task from "@/models/task";
-import mongoose from "mongoose";
+// import mongoose from "mongoose";
 
-interface Params {
-  params: { id: string };
-}
+// interface Params {
+//   params: { id: string };
+// }
 
 export async function PATCH(request: Request, { params }: {params: {id: string}}) {
   await connectDB();
@@ -29,7 +29,7 @@ export async function PATCH(request: Request, { params }: {params: {id: string}}
   }
 }
 
-import { ObjectId } from "mongodb";
+// import { ObjectId } from "mongodb";
 export async function DELETE(
   req: NextRequest,
   { params }: { params: { id: string } }
