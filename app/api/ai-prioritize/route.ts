@@ -23,8 +23,9 @@ export async function POST(req: Request) {
         const priority = response.choices[0]?.message?.content?.trim() || "Medium Priority";
         return NextResponse.json({ priority }, { status: 200 });
 
-    } catch (error: any) {
-        console.error("API Error:", error);
-        return NextResponse.json({ error: error.message || "Failed to process request" }, { status: 500 });
+    } catch (error) {
+        const err = error as Error;
+        console.error("API Error:", err.message);
+        return NextResponse.json({ error: err.message || "Failed to process request" }, { status: 500 });
     }
 }
