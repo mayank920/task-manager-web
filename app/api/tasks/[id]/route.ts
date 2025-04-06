@@ -1,7 +1,8 @@
 // app/api/tasks/[id]/route.ts
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import connectDB from "@/lib/mongodb";
 import Task from "@/models/task";
+import mongoose from "mongoose";
 
 interface Params {
   params: { id: string };
@@ -28,17 +29,37 @@ export async function PATCH(request: Request, { params }: {params: {id: string}}
   }
 }
 
-export async function DELETE(_req: Request, { params }: Params) {
+import { ObjectId } from "mongodb";
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   await connectDB();
 
   try {
     const deletedTask = await Task.findByIdAndDelete(params.id);
+
     if (!deletedTask) {
       return NextResponse.json({ message: "Task not found" }, { status: 404 });
     }
-    return NextResponse.json({ message: "Task deleted" });
+
+    return NextResponse.json({ message: "Task deleted" }, { status: 200 });
   } catch (error) {
-    console.log(error)
-    return NextResponse.json({ message: "Failed to delete task" }, { status: 500 });
+    console.error("DELETE error:", error);
+    return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
   }
 }
+// export async function DELETE(_req: Request, { params }: Params) {
+//   await connectDB();
+
+//   try {
+//     const deletedTask = await Task.findByIdAndDelete(params.id);
+//     if (!deletedTask) {
+//       return NextResponse.json({ message: "Task not found" }, { status: 404 });
+//     }
+//     return NextResponse.json({ message: "Task deleted" });
+//   } catch (error) {
+//     console.log(error)
+//     return NextResponse.json({ message: "Failed to delete task" }, { status: 500 });
+//   }
+// }
