@@ -31,6 +31,7 @@ export async function PATCH(request: Request, context: {params: {id: string}}) {
 }
 
 // import { ObjectId } from "mongodb";
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function DELETE(
   request: Request,
   { params }: { params: Record<string, string> }
