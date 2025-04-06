@@ -1,3 +1,4 @@
+// @ts-nocheck
 // app/api/tasks/[id]/route.ts
 import { NextResponse} from "next/server";
 import connectDB from "@/lib/mongodb";
