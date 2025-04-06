@@ -5,7 +5,7 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export async function POST(req: Request) {
     try {
-        const { taskTitle } = await req.json();
+        const { taskTitle }= await req.json();
 
         if (!taskTitle) {
             return NextResponse.json({ error: "Task Title is required" }, { status: 400 });
