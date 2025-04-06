@@ -8,11 +8,12 @@ import Task from "@/models/task";
 //   params: { id: string };
 // }
 
-export async function PATCH(request: Request, { params }: {params: {id: string}}) {
+export async function PATCH(request: Request, context: {params: {id: string}}) {
   await connectDB();
   const {completed} = await request.json();
+  const {id} = context.params;
   try {
-    const updatedTask = await Task.findByIdAndUpdate(params.id, {completed}, { new: true });
+    const updatedTask = await Task.findByIdAndUpdate(id, {completed}, { new: true });
     if (!updatedTask) {
       return NextResponse.json({ message: "Task not found" }, { status: 404 });
     }
