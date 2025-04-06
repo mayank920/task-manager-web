@@ -31,13 +31,11 @@ export async function PATCH(request: Request, context: {params: {id: string}}) {
 }
 
 // import { ObjectId } from "mongodb";
-interface Params{
-  params: {id: string}
-}
 export async function DELETE(
   request: Request,
-  { params }: Params
+  { params }: { params:{ id: string}}
 ) {
+
   await connectDB();
   const { id } = params;
 
