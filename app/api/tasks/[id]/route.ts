@@ -32,10 +32,11 @@ export async function PATCH(request: Request, context: {params: {id: string}}) {
 
 // import { ObjectId } from "mongodb";
 export async function DELETE(
-  _request: Request,
+  request: Request,
   context:{ params: { id: string } }
 ) {
   await connectDB();
+  await request.json()
   const { id } = context.params;
   try {
     const deletedTask = await Task.findByIdAndDelete(id);
