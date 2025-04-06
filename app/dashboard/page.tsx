@@ -5,7 +5,8 @@ import { Priority, Task } from "../types";
 
 const Dashboard = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const isValidPriority = (priority: any): priority is Priority => {return ["High", "Medium", "Low"].includes(priority);};
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const isValidPriority = (priority: string): priority is Priority => {return ["High", "Medium", "Low"].includes(priority);};
 
   useEffect(()=>{
     const fetchTasks = async()=>{
@@ -22,8 +23,12 @@ const Dashboard = () => {
 
       const data = JSON.parse(text); 
       console.log("Parsed JSON data:", data);
-
-      const validatedTasks: Task[] = data.map((task: any)=>({...task, id: task._id || task.id, priority: isValidPriority(task.priority)? task.priority: "High",}))
+      
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const validatedTasks: Task[] = data.map((task: any)=>({...task,
+        id: task._id || task.id || crypto.randomUUID(),
+        completed: task.completed,
+        priority: isValidPriority(task.priority)? task.priority: "High",}))
       console.log("parsed tasks:", data)// Parse JSON safely
       setTasks(validatedTasks);
     } catch (error) {

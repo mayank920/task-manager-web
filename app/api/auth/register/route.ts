@@ -23,7 +23,7 @@ export async function POST(req: Request) {
     await newUser.save();
 
     return NextResponse.json({ message: "User registered successfully" }, { status: 201 });
-  } catch (_error) {
+  } catch {
     return NextResponse.json({ error: "Something went wrong" }, { status: 500 });
   }
 }

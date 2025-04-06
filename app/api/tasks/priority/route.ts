@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
       model: "gpt-3.5-turbo",
     });
 
-    let aiPriorityRaw = response.choices?.[0]?.message?.content ?? "";
+    const aiPriorityRaw = response.choices?.[0]?.message?.content ?? "";
     const aiPriority = aiPriorityRaw.trim().charAt(0).toUpperCase() + aiPriorityRaw.trim().slice(1).toLowerCase();
 
     if (!allowedPriorities.includes(aiPriority)) {

@@ -1,13 +1,22 @@
-// lib/db.ts
 import mongoose from "mongoose";
 
 const MONGODB_URI = process.env.MONGO_DB_URI as string;
 
 if (!MONGODB_URI) {
-  throw new Error("Please define the MONGODB_URI environment variable inside .env.local");
+  throw new Error("Please define the MONGO_DB_URI environment variable in .env.local");
 }
 
-let cached = (global as any).mongoose || { conn: null, promise: null };
+// Extend the global object to include our cache variable
+declare global {
+  // eslint-disable-next-line no-var
+  var _mongoose: {
+    conn: typeof mongoose | null;
+    promise: Promise<typeof mongoose> | null;
+  } | undefined;
+}
+
+// Use the correctly named global._mongoose
+const cached = global._mongoose ?? (global._mongoose = { conn: null, promise: null });
 
 export default async function connectDB() {
   if (cached.conn) return cached.conn;

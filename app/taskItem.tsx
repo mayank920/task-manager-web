@@ -1,5 +1,4 @@
 "use client";
-import {useState} from "react";
 import { Priority, Task } from "./types";
 
 interface TaskProps{
@@ -13,14 +12,14 @@ interface TaskProps{
 }
 
 const TaskItem: React.FC<TaskProps> = ({task, onDelete, onEdit, onToggleComplete, changeTaskPriority, changeDueDate})=>{
-    const [isEditing, setIsEditing] = useState(false);
-    const [newTitle, setNewTitle] = useState(task.title);
-    const [priority, setPriority] = useState(task.priority);
+    // const [isEditing, setIsEditing] = useState(false);
+    // const [newTitle, setNewTitle] = useState(task.title);
+    // const [priority, setPriority] = useState(task.priority);
 
-    const handleEdit=()=>{
-        if (isEditing) onEdit(task.id, newTitle);
-        setIsEditing(!isEditing);
-    };
+    // const handleEdit=()=>{
+    //     if (isEditing) onEdit(task.id, newTitle);
+    //     setIsEditing(!isEditing);
+    // };
 
 
 
