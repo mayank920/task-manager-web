@@ -1,5 +1,5 @@
 // app/api/tasks/[id]/route.ts
-import { NextResponse, NextRequest } from "next/server";
+import { NextResponse} from "next/server";
 import connectDB from "@/lib/mongodb";
 import Task from "@/models/task";
 // import mongoose from "mongoose";
@@ -32,13 +32,13 @@ export async function PATCH(request: Request, context: {params: {id: string}}) {
 
 // import { ObjectId } from "mongodb";
 export async function DELETE(
-  req: NextRequest,
-  { params }: { params: { id: string } }
+  _request: Request,
+  context:{ params: { id: string } }
 ) {
   await connectDB();
-
+  const { id } = context.params;
   try {
-    const deletedTask = await Task.findByIdAndDelete(params.id);
+    const deletedTask = await Task.findByIdAndDelete(id);
 
     if (!deletedTask) {
       return NextResponse.json({ message: "Task not found" }, { status: 404 });
