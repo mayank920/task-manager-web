@@ -1,5 +1,5 @@
 // app/api/tasks/[id]/route.ts
-import { NextResponse, NextRequest} from "next/server";
+import { NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
 import Task from "@/models/task";
 // import mongoose from "mongoose";
@@ -30,19 +30,25 @@ export async function PATCH(request: Request, context: {params: {id: string}}) {
   }
 }
 
+type Context = {
+  params: {
+    id: string;
+  };
+};
 // app/api/tasks/[id]/route.ts
 
 // app/api/tasks/[id]/route.ts
 // '@ts-expect-error'
 export async function DELETE(
-  req: NextRequest,
-  context: { params: { id: string } }
+  request: Request, 
+  context: Context
 ) {
+  
   try {
     await connectDB();
-    const { id } = context.params;
+    const taskID = context.params.id
 
-    await Task.findByIdAndDelete(id);
+    await Task.findByIdAndDelete(taskID);
 
     return new Response("Deleted", { status: 200 });
   } catch (error) {
