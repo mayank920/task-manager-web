@@ -8,10 +8,10 @@ import Task from "@/models/task";
 //   params: { id: string };
 // }
 
-export async function PATCH(request: Request, context: {params: {id: string}}) {
+export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
   await connectDB();
   const {completed} = await request.json();
-  const {id} = context.params;
+  const {id} = await params;
   try {
     const updatedTask = await Task.findByIdAndUpdate(id, {completed}, { new: true });
     if (!updatedTask) {
@@ -34,7 +34,7 @@ export async function PATCH(request: Request, context: {params: {id: string}}) {
 // app/api/tasks/[id]/route.ts
 // '@ts-expect-error'
 export async function DELETE(
-  request: NextRequest,
+  _req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
