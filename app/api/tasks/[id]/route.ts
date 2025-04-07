@@ -1,5 +1,5 @@
 // app/api/tasks/[id]/route.ts
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest} from "next/server";
 import connectDB from "@/lib/mongodb";
 import Task from "@/models/task";
 // import mongoose from "mongoose";
@@ -33,25 +33,24 @@ export async function PATCH(request: Request, context: {params: {id: string}}) {
 
 // app/api/tasks/[id]/route.ts
 // '@ts-expect-error'
-type Params = {
-  params: {
-    id: string;
-  };
-};
 export async function DELETE(
-  _req: Request, 
-  {params}: Params
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  
   try {
     await connectDB();
+    const { id } = await params;
 
-    await Task.findByIdAndDelete(params.id);
+    const deletedTask = await Task.findByIdAndDelete(id);
 
-    return new Response("Deleted", { status: 200 });
+    if (!deletedTask) {
+      return NextResponse.json({ message: 'Task not found' }, { status: 404 });
+    }
+
+    return NextResponse.json({ message: 'Task deleted successfully' });
   } catch (error) {
-    console.error(error)
-    return new Response("Failed to delete task", { status: 500 });
+    console.error('DELETE error:', error);
+    return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
   }
 }
 // import { ObjectId } from "mongodb";
