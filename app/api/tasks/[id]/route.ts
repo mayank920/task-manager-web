@@ -33,9 +33,14 @@ export async function PATCH(request: Request, context: {params: {id: string}}) {
 
 // app/api/tasks/[id]/route.ts
 // '@ts-expect-error'
+type Params = {
+  params: {
+    id: string;
+  };
+};
 export async function DELETE(
-  _: Request, 
-  {params}: {params: {id: string}}
+  _req: Request, 
+  {params}: Params
 ) {
   
   try {
