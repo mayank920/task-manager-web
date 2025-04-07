@@ -36,22 +36,20 @@ export async function PATCH(request: Request, context: {params: {id: string}}) {
 
 
 export async function DELETE(
-  request: Request,
-  { params }: { params: { id: string } }
+  req: Request,
+  context: { params: { id: string } }
 ) {
-  await connectDB();
-
   try {
-    await Task.findByIdAndDelete(params.id);
+    await connectDB();
+    await Task.findByIdAndDelete(context.params.id);
     return new Response("Task deleted", { status: 200 });
-  } catch (error) {
-    console.log(error)
+  } catch (err) {
+    console.log(err)
     return new Response("Failed to delete task", { status: 500 });
   }
 }
 
 // import { ObjectId } from "mongodb";
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 // export async function DELETE( request: Request, context:{ params:{ id: string}}
 // ) {
 
