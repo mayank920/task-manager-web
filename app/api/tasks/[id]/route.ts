@@ -33,7 +33,7 @@ export async function PATCH(request: Request, context: {params: {id: string}}) {
 // app/api/tasks/[id]/route.ts
 
 // app/api/tasks/[id]/route.ts
-// @ts-ignore
+// '@ts-expect-error'
 export async function DELETE(
   req: NextRequest,
   context: { params: { id: string } }
@@ -50,7 +50,6 @@ export async function DELETE(
     return new Response("Failed to delete task", { status: 500 });
   }
 }
-
 // import { ObjectId } from "mongodb";
 // export async function DELETE( request: Request, context:{ params:{ id: string}}
 // ) {
