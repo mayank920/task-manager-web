@@ -1,4 +1,3 @@
-// @ts-nocheck
 // app/api/tasks/[id]/route.ts
 import { NextResponse} from "next/server";
 import connectDB from "@/lib/mongodb";
@@ -32,13 +31,13 @@ export async function PATCH(request: Request, context: {params: {id: string}}) {
 }
 
 // import { ObjectId } from "mongodb";
-export async function DELETE(
-  request: Request,
-  { params }: { params:{ id: string}}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function DELETE( request: Request,
+  context: { params:{ id: string}}
 ) {
 
   await connectDB();
-  const { id } = params;
+  const { id } = context.params;
 
   try {
     const deletedTask = await Task.findByIdAndDelete(id);
