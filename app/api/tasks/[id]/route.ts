@@ -29,24 +29,18 @@ export async function PATCH(request: Request, context: {params: {id: string}}) {
     return NextResponse.json({ message: "Failed to update task" }, { status: 500 });
   }
 }
-
-type Context = {
-  params: {
-    id: string;
-  };
-};
 // app/api/tasks/[id]/route.ts
 
 // app/api/tasks/[id]/route.ts
 // '@ts-expect-error'
 export async function DELETE(
   request: Request, 
-  context: Context
+  context: {params: {id: string}}
 ) {
   
   try {
     await connectDB();
-    const taskID = context.params.id
+    const taskID = context.params
 
     await Task.findByIdAndDelete(taskID);
 
