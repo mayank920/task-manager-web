@@ -45,6 +45,7 @@ export async function DELETE(
     await Task.findByIdAndDelete(params.id);
     return new Response("Task deleted", { status: 200 });
   } catch (error) {
+    console.log(error)
     return new Response("Failed to delete task", { status: 500 });
   }
 }
