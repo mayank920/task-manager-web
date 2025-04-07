@@ -44,6 +44,7 @@ export async function DELETE(
     await Task.findByIdAndDelete(params.id);
     return new Response("Deleted", { status: 200 });
   } catch (err) {
+    console.error(err)
     return new Response("Server error", { status: 500 });
   }
 }
