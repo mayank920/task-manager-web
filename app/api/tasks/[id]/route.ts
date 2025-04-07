@@ -33,9 +33,9 @@ export async function PATCH(request: Request, context: {params: {id: string}}) {
 // app/api/tasks/[id]/route.ts
 
 // app/api/tasks/[id]/route.ts
-
+// @ts-ignore
 export async function DELETE(
-  request: NextRequest,
+  req: NextRequest,
   context: { params: { id: string } }
 ) {
   try {
