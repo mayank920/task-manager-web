@@ -32,17 +32,21 @@ export async function PATCH(request: Request, context: {params: {id: string}}) {
 
 // app/api/tasks/[id]/route.ts
 
+// app/api/tasks/[id]/route.ts
+
+
 export async function DELETE(
   request: Request,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } }
 ) {
-  const { id } = context.params;
+  await connectDB();
 
-  console.log("DELETE request received for id:", id);
-
-  return new Response(`Task with ID ${id} deleted`, {
-    status: 200,
-  });
+  try {
+    await Task.findByIdAndDelete(params.id);
+    return new Response("Task deleted", { status: 200 });
+  } catch (error) {
+    return new Response("Failed to delete task", { status: 500 });
+  }
 }
 
 // import { ObjectId } from "mongodb";
