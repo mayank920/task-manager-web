@@ -34,15 +34,14 @@ export async function PATCH(request: Request, context: {params: {id: string}}) {
 // app/api/tasks/[id]/route.ts
 // '@ts-expect-error'
 export async function DELETE(
-  request: Request, 
-  context: {params: {id: string}}
+  _: Request, 
+  {params}: {params: {id: string}}
 ) {
   
   try {
     await connectDB();
-    const taskID = context.params
 
-    await Task.findByIdAndDelete(taskID);
+    await Task.findByIdAndDelete(params.id);
 
     return new Response("Deleted", { status: 200 });
   } catch (error) {
