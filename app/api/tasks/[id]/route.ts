@@ -30,29 +30,42 @@ export async function PATCH(request: Request, context: {params: {id: string}}) {
   }
 }
 
-// import { ObjectId } from "mongodb";
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function DELETE( request: Request, context:{ params:{ id: string}}
-) {
+// app/api/tasks/[id]/route.ts
 
-  await connectDB();
-  const nEw = await request.json();
-  console.log(nEw);
+export async function DELETE(
+  request: Request,
+  context: { params: { id: string } }
+) {
   const { id } = context.params;
 
-  try {
-    const deletedTask = await Task.findByIdAndDelete(id);
+  console.log("DELETE request received for id:", id);
 
-    if (!deletedTask) {
-      return NextResponse.json({ message: "Task not found" }, { status: 404 });
-    }
-
-    return NextResponse.json({ message: "Task deleted" }, { status: 200 });
-  } catch (error) {
-    console.error("DELETE error:", error);
-    return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
-  }
+  return new Response(`Task with ID ${id} deleted`, {
+    status: 200,
+  });
 }
+
+// import { ObjectId } from "mongodb";
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// export async function DELETE( request: Request, context:{ params:{ id: string}}
+// ) {
+
+//   await connectDB();
+//   const { id } = context.params;
+
+//   try {
+//     const deletedTask = await Task.findByIdAndDelete(id);
+
+//     if (!deletedTask) {
+//       return NextResponse.json({ message: "Task not found" }, { status: 404 });
+//     }
+
+//     return NextResponse.json({ message: "Task deleted" }, { status: 200 });
+//   } catch (error) {
+//     console.error("DELETE error:", error);
+//     return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
+//   }
+// }
 // export async function DELETE(_req: Request, { params }: Params) {
 //   await connectDB();
 
